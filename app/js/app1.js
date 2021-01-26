@@ -7,12 +7,11 @@ App = {
        await App.loadWeb3()
        await App.loadAccount()
        await App.loadContract()
+       //Registration for new user
+       if(window.location.hash === '#load')
+           await  App.signup();
 
-       if(window.location.hash.includes("name")){
-        await  App.searchUser(); }
-       if(window.location.hash === '#load'){
-        await  App.signup();}
-        await App.render()
+       await App.render()
    },
 
 loadWeb3: async() => {
@@ -26,11 +25,8 @@ loadWeb3: async() => {
           alert("Permission Denied, Metamask Not connected!");
         }
       }
-      
       else {
-        alert(
-          "Non-Ethereum browser detected. You should consider trying MetaMask!"
-        );
+        alert("Non-Ethereum browser detected. You should consider trying MetaMask!");
       }
 },
 
@@ -39,11 +35,10 @@ loadAccount: async () => {
     setInterval(()=>{
         App.account = web3.currentProvider.selectedAddress;
        console.log(App.account)
-    }, 10000);
+    }, 3000);
 
     //set ownerAddress class to App.account 
     App.account = web3.currentProvider.selectedAddress;
-    console.log(App.account+"HI")
     $("#account").text(App.account);  
   },
 
@@ -770,11 +765,12 @@ loadAccount: async () => {
     $("#account").html(App.account);  
 
     const bool= await App.dwitterManage.methods.accountCheck(App.account).call();
+    //New user redirected to signup page
     if(bool == false){
          window.location.href = "signup.html#load";
     } 
- // Render Account
- App.account = web3.currentProvider.selectedAddress;
+ 
+    App.account = web3.currentProvider.selectedAddress;
     const id = await App.dwitterManage.methods.addressToId(App.account).call();
     const userName = await App.dwitterManage.methods.idToUsername(id).call();
     console.log(userName)
@@ -795,9 +791,8 @@ loadAccount: async () => {
     let upvotes; let reports;
    
     const $postTemplate = $(".dweetpost");
-   for(let i= dweetCount-1; i>=0; i--){
+    for(let i= dweetCount-1; i>=0; i--){
       const dweet = await App.dwitterManage.methods.dweets(i).call();
-    //  console.log(dweet);
       if(dweet[7] == false) {
          const times = dweet[3];
          const d = new Date(0);
@@ -874,7 +869,6 @@ loadAccount: async () => {
 
         $newpostTemplate.show();
       }}
-     
       await App.dweetsByUser();
 },
 
@@ -886,7 +880,6 @@ addNewDweet: async () => {
     var rc = await App.dwitterManage.methods
             .addNewDweet(content,hashtag)
             .send({ from: web3.currentProvider.selectedAddress });
-  //  console.log(rc);
     window.location.reload(); }
 },
 
@@ -942,13 +935,16 @@ deleteDweet: async (id) => {
 searchUser: async () => { 
   const userName = $('#search').val();
   console.log("Profile11")
-   const bool1 = await App.dwitterManage.methods.userNameCheck(userName).call();
+  const authorId= await App.dwitterManage.methods.addressToId(App.account).call();
+  const myaccount= await App.dwitterManage.methods.idToUsername(authorId).call();
+  if(myaccount == userName) {await App.profile();}
+  else{ const bool1 = await App.dwitterManage.methods.userNameCheck(userName).call();
    const id11 = await App.dwitterManage.methods.userNameToId(userName).call();
    console.log("one"+id11)
   if(bool1 == true){
       var rc = await App.dwitterManage.methods
                      .search(userName).call();
-    //  $("#account").text(rc[2]); 
+
       $(".name").text(`${rc[0]} ${rc[1]}`)
       $(".sub-name").text(`@${userName}`)
       $("#bio").hide(); 
@@ -983,7 +979,7 @@ searchUser: async () => {
 
   else{alert("Invalid username !")} 
  
-},
+}},
 
 
 followUser1: async(id) => { //get the id
@@ -1017,6 +1013,7 @@ unfollowUser1: async(id) => { //get the id
  },
 
 dweetsByUser : async() => {
+  //console.log("wofks")
   const $postTemplate = $(".dweetbody1");
   const dweetCount = await App.dwitterManage.methods.dweet_count().call();
   for(let i = dweetCount-1; i>=0; i--){
