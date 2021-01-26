@@ -836,6 +836,14 @@ loadAccount: async () => {
          .on("click", function(){ App.reportDweet(id); }); 
        
          $newpostTemplate
+         .find(".upvotes")
+         .prop("id", id+"d"); 
+
+         $newpostTemplate
+         .find(".upvotesChange")
+         .prop("id", id+"e"); 
+
+         $newpostTemplate
          .find(".reports")
          .prop("id", id+"f"); 
  
@@ -851,6 +859,7 @@ loadAccount: async () => {
         $newpostTemplate
         .find(".upvoteButton")
         .prop("style", "display:none")
+        
        }
        else{
         $newpostTemplate
@@ -885,9 +894,9 @@ addNewDweet: async () => {
 
 upvoteDweet: async (id) => { 
   await App.dwitterManage.methods
-      .upvoteDweet(id)
-      .send({ from: web3.currentProvider.selectedAddress });  
- 
+    .upvoteDweet(id)
+       .send({ from: web3.currentProvider.selectedAddress });  
+ console.log("upvoting")
    var old = $(`#${id}d`).text()
    var curr = parseInt(old)+1;
    $(`#${id}d`).hide()
@@ -895,14 +904,13 @@ upvoteDweet: async (id) => {
    $(`#${id}b`).show()
    $(`#${id}e`).text(curr)
    $(`#${id}e`).show()
-   window.location.reload();
 },
 
 downvoteDweet: async (id) => { 
   await App.dwitterManage.methods
     .downvoteDweet(id)
-    .send({ from: web3.currentProvider.selectedAddress }); 
-
+      .send({ from: web3.currentProvider.selectedAddress }); 
+    console.log("downpvoting")
   var old = $(`#${id}e`).text()
   var curr = parseInt(old)-1;
   $(`#${id}b`).hide()
@@ -910,7 +918,6 @@ downvoteDweet: async (id) => {
   $(`#${id}a`).show()
   $(`#${id}d`).text(curr)
   $(`#${id}d`).show()
-  window.location.reload();
 },
 
 reportDweet: async (id) => { 
@@ -1098,5 +1105,4 @@ $(() => {
     App.load();
   });
 });
-
 
