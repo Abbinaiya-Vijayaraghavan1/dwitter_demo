@@ -148,6 +148,7 @@ body{
     }
 
 
+    
     .upvoteButton {
      
       border-radius: 10px;
@@ -355,7 +356,7 @@ body{
   }
   .search{
     float: right;
-    width:;
+   
   }
   
   form.search input[type=text] {
