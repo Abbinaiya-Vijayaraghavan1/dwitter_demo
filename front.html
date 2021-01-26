@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>DWITTER</title>
-    <link rel="stylesheet" href="front.css">
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="app/css/front.css">
+    <link rel="stylesheet" href="app/css/profile.css">
      
     <link
     rel="stylesheet"
@@ -61,7 +61,7 @@
         <div class="dweetpost"  style="padding: 0px; border-bottom: 6px solid #e6ecf0; display:none;">
             <div class="xyz">
             <div class="ownerAvatar">
-                <img src="avatar1.jpg"
+                <img src="app/images/avatar1.jpg"
                  style="display: inline; width: 80px; height: 80px;" />
             </div>
             
@@ -117,7 +117,7 @@
                     
                     <div class="main">
                         <div class="image">
-                            <img src="avatar1.jpg" style="width: 105px; height: auto;">
+                            <img src="app/images/avatar1.jpg" style="width: 105px; height: auto;">
                             <div class="hover">
                                 <i class="fas fa-camera fa-2x"></i>
                             </div>
@@ -152,7 +152,7 @@
                     <div class="right" >
                         <div>
                            <span> <h3 class="number" id="dweets"> </h3>
-                            <h3 class="number-title">Dweets</h3> </span>
+                            <h3 class="number-title" style="cursor:pointer" onClick="App.dweetsByUser(); return false;"> Dweets</h3> </span>
                        
                             <span> <h3 class="number" id="following"> </h3>
                             <h3 class="number-title">Following</h3> </span>
@@ -175,8 +175,8 @@
      integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
      crossorigin="anonymous"
    ></script>
-   <script src="app1.js"></script>
-   <script src="signupapp.js"></script>
+   <script src="app/js/app1.js"></script>
+   <script src="app/js/signupapp.js"></script>
 
 </body>
 </html>

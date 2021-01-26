@@ -7,14 +7,11 @@ App = {
        await App.loadWeb3()
        await App.loadAccount()
        await App.loadContract()
-       
-    //   if(window.location.hash === '#load-stuff'){
-      // await  App.profile(); }
-       if(window.location.hash.includes("name")){
-        await  App.searchUser(); }
-       if(window.location.hash === '#load'){
-        await  App.signup();}
-        await App.render()
+       //Registration for new user
+       if(window.location.hash === '#load')
+           await  App.signup();
+
+       await App.render()
    },
 
 loadWeb3: async() => {
@@ -28,11 +25,8 @@ loadWeb3: async() => {
           alert("Permission Denied, Metamask Not connected!");
         }
       }
-      
       else {
-        alert(
-          "Non-Ethereum browser detected. You should consider trying MetaMask!"
-        );
+        alert("Non-Ethereum browser detected. You should consider trying MetaMask!");
       }
 },
 
@@ -41,11 +35,10 @@ loadAccount: async () => {
     setInterval(()=>{
         App.account = web3.currentProvider.selectedAddress;
        console.log(App.account)
-    }, 10000);
+    }, 3000);
 
     //set ownerAddress class to App.account 
     App.account = web3.currentProvider.selectedAddress;
-    console.log(App.account+"HI")
     $("#account").text(App.account);  
   },
 
@@ -772,11 +765,12 @@ loadAccount: async () => {
     $("#account").html(App.account);  
 
     const bool= await App.dwitterManage.methods.accountCheck(App.account).call();
+    //New user redirected to signup page
     if(bool == false){
          window.location.href = "signup.html#load";
     } 
- // Render Account
- App.account = web3.currentProvider.selectedAddress;
+ 
+    App.account = web3.currentProvider.selectedAddress;
     const id = await App.dwitterManage.methods.addressToId(App.account).call();
     const userName = await App.dwitterManage.methods.idToUsername(id).call();
     console.log(userName)
@@ -797,9 +791,8 @@ loadAccount: async () => {
     let upvotes; let reports;
    
     const $postTemplate = $(".dweetpost");
-   for(let i= dweetCount-1; i>=0; i--){
+    for(let i= dweetCount-1; i>=0; i--){
       const dweet = await App.dwitterManage.methods.dweets(i).call();
-    //  console.log(dweet);
       if(dweet[7] == false) {
          const times = dweet[3];
          const d = new Date(0);
@@ -843,6 +836,14 @@ loadAccount: async () => {
          .on("click", function(){ App.reportDweet(id); }); 
        
          $newpostTemplate
+         .find(".upvotes")
+         .prop("id", id+"d"); 
+
+         $newpostTemplate
+         .find(".upvotesChange")
+         .prop("id", id+"e"); 
+
+         $newpostTemplate
          .find(".reports")
          .prop("id", id+"f"); 
  
@@ -858,6 +859,7 @@ loadAccount: async () => {
         $newpostTemplate
         .find(".upvoteButton")
         .prop("style", "display:none")
+        
        }
        else{
         $newpostTemplate
@@ -876,7 +878,6 @@ loadAccount: async () => {
 
         $newpostTemplate.show();
       }}
-     
       await App.dweetsByUser();
 },
 
@@ -888,15 +889,14 @@ addNewDweet: async () => {
     var rc = await App.dwitterManage.methods
             .addNewDweet(content,hashtag)
             .send({ from: web3.currentProvider.selectedAddress });
-  //  console.log(rc);
     window.location.reload(); }
 },
 
 upvoteDweet: async (id) => { 
   await App.dwitterManage.methods
-      .upvoteDweet(id)
-      .send({ from: web3.currentProvider.selectedAddress });  
- 
+    .upvoteDweet(id)
+       .send({ from: web3.currentProvider.selectedAddress });  
+ console.log("upvoting")
    var old = $(`#${id}d`).text()
    var curr = parseInt(old)+1;
    $(`#${id}d`).hide()
@@ -904,14 +904,13 @@ upvoteDweet: async (id) => {
    $(`#${id}b`).show()
    $(`#${id}e`).text(curr)
    $(`#${id}e`).show()
-   window.location.reload();
 },
 
 downvoteDweet: async (id) => { 
   await App.dwitterManage.methods
     .downvoteDweet(id)
-    .send({ from: web3.currentProvider.selectedAddress }); 
-
+      .send({ from: web3.currentProvider.selectedAddress }); 
+    console.log("downpvoting")
   var old = $(`#${id}e`).text()
   var curr = parseInt(old)-1;
   $(`#${id}b`).hide()
@@ -919,7 +918,6 @@ downvoteDweet: async (id) => {
   $(`#${id}a`).show()
   $(`#${id}d`).text(curr)
   $(`#${id}d`).show()
-  window.location.reload();
 },
 
 reportDweet: async (id) => { 
@@ -944,13 +942,16 @@ deleteDweet: async (id) => {
 searchUser: async () => { 
   const userName = $('#search').val();
   console.log("Profile11")
-   const bool1 = await App.dwitterManage.methods.userNameCheck(userName).call();
+  const authorId= await App.dwitterManage.methods.addressToId(App.account).call();
+  const myaccount= await App.dwitterManage.methods.idToUsername(authorId).call();
+  if(myaccount == userName) {await App.profile();}
+  else{ const bool1 = await App.dwitterManage.methods.userNameCheck(userName).call();
    const id11 = await App.dwitterManage.methods.userNameToId(userName).call();
    console.log("one"+id11)
   if(bool1 == true){
       var rc = await App.dwitterManage.methods
                      .search(userName).call();
-    //  $("#account").text(rc[2]); 
+
       $(".name").text(`${rc[0]} ${rc[1]}`)
       $(".sub-name").text(`@${userName}`)
       $("#bio").hide(); 
@@ -985,7 +986,7 @@ searchUser: async () => {
 
   else{alert("Invalid username !")} 
  
-},
+}},
 
 
 followUser1: async(id) => { //get the id
@@ -995,7 +996,8 @@ followUser1: async(id) => { //get the id
   //Replace follow button by unfollow button
   $(".profileid").hide()
   $(".profileid1").prop("style", "visibility:visible")
- 
+  $(".profileid1").on("click", function(){ App.unfollowUser1(id11); });
+
   //Increase count of followers and following in frontend
   var old = $(`#followers`).text()
   var curr = parseInt(old)+1;
@@ -1009,6 +1011,7 @@ unfollowUser1: async(id) => { //get the id
    //Replace follow button by unfollow button
    $(".profileid1").hide()
    $(".profileid").prop("style", "visibility:visible")
+   $(".profileid").on("click", function(){ App.followUser1(id11); });
 
    //Increase count of followers and following in frontend
    var old = $(`#followers`).text()
@@ -1017,6 +1020,7 @@ unfollowUser1: async(id) => { //get the id
  },
 
 dweetsByUser : async() => {
+  //console.log("wofks")
   const $postTemplate = $(".dweetbody1");
   const dweetCount = await App.dwitterManage.methods.dweet_count().call();
   for(let i = dweetCount-1; i>=0; i--){
@@ -1101,5 +1105,4 @@ $(() => {
     App.load();
   });
 });
-
 
