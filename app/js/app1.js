@@ -789,7 +789,9 @@ loadAccount: async () => {
     const dweetCount = await App.dwitterManage.methods.dweet_count().call();
     console.log(`Dweet Count : ${dweetCount}`);
     let upvotes; let reports;
-   
+   $(".profile").show();
+   $(".profileDweet").hide();
+
     const $postTemplate = $(".dweetpost");
     for(let i= dweetCount-1; i>=0; i--){
       const dweet = await App.dwitterManage.methods.dweets(i).call();
@@ -878,7 +880,7 @@ loadAccount: async () => {
 
         $newpostTemplate.show();
       }}
-      await App.dweetsByUser();
+    //  await App.dweetsByUser();
 },
 
 addNewDweet: async () => {
@@ -962,8 +964,18 @@ searchUser: async () => {
       $("#address11").text(pkey)
       const dweetcount = await App.dwitterManage.methods.dweetCountAuthor(pkey).call();
       $("#dweets").text(dweetcount)
+    //  $("#dweets").on("click", function(){ App.dweetsByUser(userName); });
       $("#following").text(`${rc[5]}`)
       $("#followers").text(`${rc[4]}`)
+      
+      $(".dweetother")
+       .prop("disabled", false)
+       .prop("style", "visibility:visible")
+       .prop("id", userName )
+       .on("click", function(){ App.dweetsByUser(userName); });
+    $(".dweetmine")
+       .prop("disabled", true)
+       $(".dweetmine").hide();
 
       const temp = await App.dwitterManage.methods.getFollowingList(App.account).call()
       console.log("two"+id11)
@@ -1019,10 +1031,24 @@ unfollowUser1: async(id) => { //get the id
    $(`#followers`).text(curr)
  },
 
-dweetsByUser : async() => {
-  //console.log("wofks")
-  const $postTemplate = $(".dweetbody1");
+dweetsByUser1 : async() => {
+  $(".profile").hide();
+  $(".profileDweet").show();
+
+},
+
+dweetsByUser : async(userName) => {
+  console.log("wofks")
+  $(".profile").hide();
+  $(".profileDweet").show();
+  const $postTemplate = $(".dweetpost1");
   const dweetCount = await App.dwitterManage.methods.dweet_count().call();
+  const id11 = await App.dwitterManage.methods.userNameToId(userName).call();
+  const user = await App.dwitterManage.methods.users(id11).call();
+  const add1= user[1];
+  const add = add1.toLowerCase();
+  console.log(add+"addresssssssss")
+
   for(let i = dweetCount-1; i>=0; i--){
 
       App.account = web3.currentProvider.selectedAddress;
@@ -1030,7 +1056,7 @@ dweetsByUser : async() => {
       if(dweet[7] == false){
            const auth = dweet[2];
            var author = auth.toLowerCase();
-           if(author == App.account){
+           if(author == add){
                 let timestamp = dweet[3];
                 const d = new Date(0);
                 d.setUTCSeconds(timestamp);
@@ -1069,10 +1095,20 @@ profile : async() => {
     $("#address11").text(App.account)
 
     $("#dweets").text(dweetcount)
+   // $("#dweets").on("click", function(){ App.dweetsByUser(userName); });
     $("#following").text(`${user[6]}`)
     $("#followers").text(`${user[7]}`)
     $(".profileid").prop("style", "display:none")
     $(".profileid1").prop("style", "display:none")
+    
+    $(".dweetmine")
+        .prop("disabled", false)
+       .prop("style", "visibility:visible")
+       .prop("id", userName )
+       .on("click", function(){ App.dweetsByUser(userName); });
+    $(".dweetother")
+       .prop("disabled", true)
+       $(".dweetother").hide();
    
 },
 

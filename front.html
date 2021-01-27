@@ -111,9 +111,9 @@
         <div class="container">
             <div class="card">
                 <div class="header">
-                    <div class="hamburger-menu">
+                   <!-- <div class="hamburger-menu">
                         <div class="center"></div>
-                    </div>
+                    </div> -->
                     
                     <div class="main">
                         <div class="image">
@@ -124,7 +124,7 @@
                         </div>
                         <h3 class="name"></h3>
                         <h3 id="address11" style="font-size: small; color: white"> </h3>
-                        <h3 class="sub-name"></h3>
+                        <h3 class="sub-name" style="cursor:pointer"></h3>
                         
                     </div>
                 </div>
@@ -144,15 +144,22 @@
                                
                             </div>
                             <div class="share-wrap">
-                                <button class="profileid1 twtbtn" style="visibility: hidden;">Unfollow </button> 
+                                <button class="profileid1 twtbtn" style="border-radius: 10px; visibility: hidden;">Unfollow </button> 
+                            </div> 
+                            <div class="share-wrap">
+                                <button class="dweetmine twtbtn" style="margin-left: 10px; visibility: hidden;"> Dweets </button> 
                             </div>
+                            <div class="share-wrap">
+                                <button class="dweetother twtbtn" style="margin-left: 10px; visibility: hidden;"> Dweets </button> 
+                            </div>
+                            
                         </div>
                     </div>
     
                     <div class="right" >
                         <div>
-                           <span> <h3 class="number" id="dweets"> </h3>
-                            <h3 class="number-title" style="cursor:pointer" onClick="App.dweetsByUser(); return false;"> Dweets</h3> </span>
+                           <span> <h3 class="number" id="dweets" style="cursor:pointer"> </h3>
+                            <h3 class="number-title" style="cursor:pointer"> Dweets -> </h3> </span>
                        
                             <span> <h3 class="number" id="following"> </h3>
                             <h3 class="number-title">Following</h3> </span>
@@ -166,6 +173,78 @@
         </div>
 
     </div>
+
+    <div class="profileDweet" style="display: none;">
+        <br>
+         <div class="modal">
+         
+             <div class="close"></div>
+         </div>
+         
+         <div class="container">
+             <div class="card">
+                 <div class="header">
+                     <div> 
+                        <button class= "backbtn" style="margin-left: 10px ; margin-top: 10px"  >
+                            <span> <i class="material-icons">arrow_back</i></span> </button>  
+                       
+                     </div>
+                     
+                     <div class="main">
+                         <div class="image">
+                             <img src="app/images/avatar1.jpg" style="width: 105px; height: auto;">
+                             <div class="hover">
+                                 <i class="fas fa-camera fa-2x"></i>
+                             </div>
+                         </div>
+                         <h3 class="name"></h3>
+                         <h3 id="address11" style="font-size: small; color: white"> </h3>
+                         <h3 class="sub-name" style="cursor:pointer"></h3>
+                         
+                     </div>
+                 </div>
+     
+                 <div class="content">
+                    <ul id="post1">
+                        <div class="dweetpost1"  style="padding: 0px; border-bottom: 6px solid #e6ecf0; display:none;">
+                            <div class="xyz">
+                            <div class="ownerAvatar1">
+                                <img src="app/images/avatar1.jpg"
+                                 style="display: inline; width: 30px; height: 30px;" />
+                            </div>
+                            
+                            <div class="dweetbody1" >
+                                <div>
+                                    <div class="userName1" style="font-weight: bold; font-size: 20px;">
+                
+                                      
+                                    </div> <div class="time1" style="font-size: 10px;font-weight: bold; "> <h3 > </h3></div>
+                                    <div class="dweetcontent1" id="dweetcontent">
+                                       <p></p>
+                                    </div>
+                                    <div class="hashtags1">
+                                        <h5>
+                                          
+                                        </h5>
+                                    </div>
+                                </div>
+                
+                                <div class="dweetfooter1">
+                                    <button class= "deleteButton" style="visibility: hidden;" >
+                                        <span> <i class="material-icons">delete</i></span> <span> Delete </span>  </button>  
+                                   
+                                </div>
+                            </div></div> 
+                        </div> </ul> 
+                      
+     
+                    
+                 </div>
+             </div>
+         </div>
+ 
+     </div>
+ 
 
    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
