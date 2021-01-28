@@ -24,7 +24,7 @@
 </head>
 
 
-<body>
+<body style="font-family:verdana;">
     
     <div class="side">
        
@@ -38,7 +38,7 @@
 
 
 
-    <div class="timeline">
+    <div class="timeline" >
          
         <div>
             <h2 style="padding-left: 10px; border-bottom: 4px solid #20465f;">Home
@@ -86,7 +86,7 @@
                         <span> <i class="material-icons">favorite_border</i></span> <span class= "upvotes"></span> </button>  
                     <button class= "downvoteButton" style="visibility: hidden;" > 
                         <span> <i class="material-icons">favorite</i></span><span class= "upvotesChange"></span>  </button> 
-                    <button class= "reportButton" style="visibility: hidden;"> REPORT
+                    <button class= "reportButton" style="visibility: hidden;"> 
                         <span> <i class="material-icons">report</i> </span><span class= "reports"></span></button>
                     
                 </div>
@@ -124,7 +124,7 @@
                         </div>
                         <h3 class="name"></h3>
                         <h3 id="address11" style="font-size: small; color: white"> </h3>
-                        <h3 class="sub-name" style="cursor:pointer"></h3>
+                        <h3 class="sub-name"></h3>
                         
                     </div>
                 </div>
@@ -140,17 +140,17 @@
                         
                         <div class="buttons-wrap" >
                             <div class="follow-wrap">
-                                <button class="profileid twtbtn"  style="border-radius: 10px; visibility: hidden;">Follow </button> 
+                                <button class="profileid otherbtn"  style="border-radius: 10px; visibility: hidden;">Follow </button> 
                                
                             </div>
                             <div class="share-wrap">
-                                <button class="profileid1 twtbtn" style="border-radius: 10px; visibility: hidden;">Unfollow </button> 
+                                <button class="profileid1 otherbtn" style="border-radius: 10px; visibility: hidden;">Unfollow </button> 
                             </div> 
                             <div class="share-wrap">
-                                <button class="dweetmine twtbtn" style="margin-left: 10px; visibility: hidden;"> Dweets </button> 
+                                <button class="dweetmine otherbtn" style="margin-left: 10px; visibility: hidden;"> Dweets </button> 
                             </div>
                             <div class="share-wrap">
-                                <button class="dweetother twtbtn" style="margin-left: 10px; visibility: hidden;"> Dweets </button> 
+                                <button class="dweetother otherbtn" style="margin-left: 10px; visibility: hidden;"> Dweets </button> 
                             </div>
                             
                         </div>
@@ -158,8 +158,8 @@
     
                     <div class="right" >
                         <div>
-                           <span> <h3 class="number" id="dweets" style="cursor:pointer"> </h3>
-                            <h3 class="number-title" style="cursor:pointer"> Dweets -> </h3> </span>
+                           <span> <h3 class="number" id="dweets"> </h3>
+                            <h3 class="number-title"> Dweets</h3> </span>
                        
                             <span> <h3 class="number" id="following"> </h3>
                             <h3 class="number-title">Following</h3> </span>
@@ -185,8 +185,7 @@
              <div class="card">
                  <div class="header">
                      <div> 
-                        <button class= "backbtn" style="margin-left: 10px ; margin-top: 10px"  >
-                            <span> <i class="material-icons">arrow_back</i></span> </button>  
+                        
                        
                      </div>
                      
@@ -199,18 +198,22 @@
                          </div>
                          <h3 class="name"></h3>
                          <h3 id="address11" style="font-size: small; color: white"> </h3>
-                         <h3 class="sub-name" style="cursor:pointer"></h3>
+                         <h3 class="sub-name"  ></h3>
                          
                      </div>
                  </div>
      
-                 <div class="content">
-                    <ul id="post1">
-                        <div class="dweetpost1"  style="padding: 0px; border-bottom: 6px solid #e6ecf0; display:none;">
+                 <div class="content1">
+                    <div> 
+                        <button onclick="App.dweetsByUser1(); " class= "backbtn" style=" margin-top: 10px"  >
+                            <span> <i class="material-icons" >arrow_back</i></span> </button>  
+                       
+                     </div>
+                    <ol class="rightside" id="post1">
+                        <div class="dweetpost1"  style="margin-left: 30px;  padding: 10px; border-bottom: 6px solid #e6ecf0; display:none;">
                             <div class="xyz">
                             <div class="ownerAvatar1">
-                                <img src="app/images/avatar1.jpg"
-                                 style="display: inline; width: 30px; height: 30px;" />
+                               
                             </div>
                             
                             <div class="dweetbody1" >
@@ -226,12 +229,13 @@
                                         <h5>
                                           
                                         </h5>
+                                        
                                     </div>
                                 </div>
                 
                                 <div class="dweetfooter1">
                                     <button class= "deleteButton" style="visibility: hidden;" >
-                                        <span> <i class="material-icons">delete</i></span> <span> Delete </span>  </button>  
+                                        <span> Delete </span> <span> </span>  </button>  
                                    
                                 </div>
                             </div></div> 

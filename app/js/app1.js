@@ -44,7 +44,38 @@ loadAccount: async () => {
 
   loadContract: async () => {
     console.log("loadcont");
-      let abi = [
+      let abi =[
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "_content",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "_hashtag",
+              "type": "string"
+            }
+          ],
+          "name": "addNewDweet",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "deleteDweet",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
         {
           "anonymous": false,
           "inputs": [
@@ -128,6 +159,19 @@ loadAccount: async () => {
           "type": "event"
         },
         {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "downvoteDweet",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
           "anonymous": false,
           "inputs": [
             {
@@ -147,6 +191,60 @@ loadAccount: async () => {
           "type": "event"
         },
         {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "followUser",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "_firstName",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "_lastName",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "_userName",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "_bio",
+              "type": "string"
+            }
+          ],
+          "name": "registerNewUser",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "reportDweet",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
           "anonymous": false,
           "inputs": [
             {
@@ -164,6 +262,19 @@ loadAccount: async () => {
           ],
           "name": "reported",
           "type": "event"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "unfollowUser",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
         },
         {
           "anonymous": false,
@@ -187,6 +298,19 @@ loadAccount: async () => {
         {
           "inputs": [
             {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "upvoteDweet",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
               "internalType": "address",
               "name": "",
               "type": "address"
@@ -201,24 +325,6 @@ loadAccount: async () => {
             }
           ],
           "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "string",
-              "name": "_content",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "_hashtag",
-              "type": "string"
-            }
-          ],
-          "name": "addNewDweet",
-          "outputs": [],
-          "stateMutability": "nonpayable",
           "type": "function"
         },
         {
@@ -241,29 +347,16 @@ loadAccount: async () => {
           "type": "function"
         },
         {
-          "inputs": [
+          "inputs": [],
+          "name": "dweet_count",
+          "outputs": [
             {
               "internalType": "uint256",
-              "name": "id",
+              "name": "",
               "type": "uint256"
             }
           ],
-          "name": "deleteDweet",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "id",
-              "type": "uint256"
-            }
-          ],
-          "name": "downvoteDweet",
-          "outputs": [],
-          "stateMutability": "nonpayable",
+          "stateMutability": "view",
           "type": "function"
         },
         {
@@ -275,38 +368,6 @@ loadAccount: async () => {
             }
           ],
           "name": "dweetCountAuthor",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "name": "dweetToAuthor",
-          "outputs": [
-            {
-              "internalType": "address",
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "dweet_count",
           "outputs": [
             {
               "internalType": "uint256",
@@ -375,13 +436,19 @@ loadAccount: async () => {
           "inputs": [
             {
               "internalType": "uint256",
-              "name": "id",
+              "name": "",
               "type": "uint256"
             }
           ],
-          "name": "followUser",
-          "outputs": [],
-          "stateMutability": "nonpayable",
+          "name": "dweetToAuthor",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
           "type": "function"
         },
         {
@@ -487,47 +554,6 @@ loadAccount: async () => {
         {
           "inputs": [
             {
-              "internalType": "string",
-              "name": "_firstName",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "_lastName",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "_userName",
-              "type": "string"
-            },
-            {
-              "internalType": "string",
-              "name": "_bio",
-              "type": "string"
-            }
-          ],
-          "name": "registerNewUser",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "id",
-              "type": "uint256"
-            }
-          ],
-          "name": "reportDweet",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
               "internalType": "address",
               "name": "",
               "type": "address"
@@ -596,32 +622,6 @@ loadAccount: async () => {
         {
           "inputs": [
             {
-              "internalType": "uint256",
-              "name": "id",
-              "type": "uint256"
-            }
-          ],
-          "name": "unfollowUser",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "uint256",
-              "name": "id",
-              "type": "uint256"
-            }
-          ],
-          "name": "upvoteDweet",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
               "internalType": "address",
               "name": "",
               "type": "address"
@@ -633,6 +633,19 @@ loadAccount: async () => {
             }
           ],
           "name": "upvotesList",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "user_count",
           "outputs": [
             {
               "internalType": "uint256",
@@ -671,19 +684,6 @@ loadAccount: async () => {
             }
           ],
           "name": "userNameToId",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "inputs": [],
-          "name": "user_count",
           "outputs": [
             {
               "internalType": "uint256",
@@ -749,7 +749,7 @@ loadAccount: async () => {
           "type": "function"
         }
       ];
-      let address = '0x88db1e808af63dde261eb8ff3b198c9ccbe6f63e';
+      let address = '0x459fa4d8409a23cf03b726a5f8941e5765bab40b';
       App.dwitterManage = new web3.eth.Contract(abi, address);
       console.log(App.dwitterManage);
   },
@@ -953,7 +953,8 @@ searchUser: async () => {
   if(bool1 == true){
       var rc = await App.dwitterManage.methods
                      .search(userName).call();
-
+    await App.loadDweetsByUser(userName);
+      await App.dweetsByUser1();
       $(".name").text(`${rc[0]} ${rc[1]}`)
       $(".sub-name").text(`@${userName}`)
       $("#bio").hide(); 
@@ -976,7 +977,8 @@ searchUser: async () => {
     $(".dweetmine")
        .prop("disabled", true)
        $(".dweetmine").hide();
-
+    
+    $(".deleteButton").hide();
       const temp = await App.dwitterManage.methods.getFollowingList(App.account).call()
       console.log("two"+id11)
       if(temp.includes(id11)){
@@ -1032,15 +1034,19 @@ unfollowUser1: async(id) => { //get the id
  },
 
 dweetsByUser1 : async() => {
-  $(".profile").hide();
-  $(".profileDweet").show();
+  console.log("Hide dweets")
+  $(".profileDweet").hide();
+  $(".profile").show();
+  
 
 },
 
-dweetsByUser : async(userName) => {
-  console.log("wofks")
+dweetsByUser : async() => {
+  console.log("Show dweets")
   $(".profile").hide();
-  $(".profileDweet").show();
+  $(".profileDweet").show(); },
+ 
+ loadDweetsByUser : async(userName) => {  console.log("wofks")
   const $postTemplate = $(".dweetpost1");
   const dweetCount = await App.dwitterManage.methods.dweet_count().call();
   const id11 = await App.dwitterManage.methods.userNameToId(userName).call();
@@ -1048,7 +1054,7 @@ dweetsByUser : async(userName) => {
   const add1= user[1];
   const add = add1.toLowerCase();
   console.log(add+"addresssssssss")
-
+  $("ol").empty();
   for(let i = dweetCount-1; i>=0; i--){
 
       App.account = web3.currentProvider.selectedAddress;
@@ -1110,6 +1116,8 @@ profile : async() => {
        .prop("disabled", true)
        $(".dweetother").hide();
    
+    await App.loadDweetsByUser(userName);
+    await App.dweetsByUser1();
 },
 
 signin: async() => {
@@ -1141,4 +1149,3 @@ $(() => {
     App.load();
   });
 });
-
