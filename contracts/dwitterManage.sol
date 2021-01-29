@@ -59,7 +59,7 @@
 
     function deleteDweet(uint id) onlyAuthor(id) public {
         dweets[id].deleted = true;
-        dweetCountAuthor(msg.sender)--;
+        dweetCountAuthor[msg.sender]--;
         emit deleted(id, block.timestamp);
         
     }

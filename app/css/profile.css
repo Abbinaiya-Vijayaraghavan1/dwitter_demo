@@ -18,6 +18,7 @@ body{
 }
 
 .card{
+    
     position: relative;
     width: 400px;
     background-color: #fff;
@@ -163,9 +164,23 @@ body{
     color: #fff;
 }
 
-.content{
-    display: flex;
+.content1{
+   
     padding: 1.7rem 2.5rem 2.6rem 2.5rem;
+    display: grid;
+  grid-template-columns: 10% auto;
+}
+
+.content2{
+   
+    padding: 1.7rem 2.5rem 2.6rem 2.5rem;
+    display: grid;
+    grid-template-columns: 10% auto;
+}
+.content{
+   
+    padding: 1.7rem 2.5rem 2.6rem 2.5rem;
+    display: flex;
 }
 
 .right{
@@ -238,13 +253,21 @@ body{
 }
 
 .buttons-wrap{
-    display: flex;
+    
     margin-top: 5px;
 }
 
-.follow-wrap, .share-wrap{
+.follow-wrap{
     flex: 4;
-    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    transition: .5s;
+}
+
+
+.share-wrap{
+    flex: 4;
     justify-content: center;
     align-items: center;
     transition: .5s;

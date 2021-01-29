@@ -44,7 +44,7 @@ loadAccount: async () => {
 
   loadContract: async () => {
     console.log("loadcont");
-      let abi = [
+      let abi =[
         {
           "anonymous": false,
           "inputs": [
@@ -749,7 +749,7 @@ loadAccount: async () => {
           "type": "function"
         }
       ];
-      let address = '0x88db1e808af63dde261eb8ff3b198c9ccbe6f63e';
+      let address = '0x9ae98530ab5b6378bf9e0d30ab7bcd8d52d33c4f';
       App.dwitterManage = new web3.eth.Contract(abi, address);
       console.log(App.dwitterManage);
   },
@@ -789,7 +789,9 @@ loadAccount: async () => {
     const dweetCount = await App.dwitterManage.methods.dweet_count().call();
     console.log(`Dweet Count : ${dweetCount}`);
     let upvotes; let reports;
-   
+   $(".profile").show();
+   $(".profileDweet").hide();
+
     const $postTemplate = $(".dweetpost");
     for(let i= dweetCount-1; i>=0; i--){
       const dweet = await App.dwitterManage.methods.dweets(i).call();
@@ -878,7 +880,7 @@ loadAccount: async () => {
 
         $newpostTemplate.show();
       }}
-      await App.dweetsByUser();
+    
 },
 
 addNewDweet: async () => {
@@ -951,7 +953,8 @@ searchUser: async () => {
   if(bool1 == true){
       var rc = await App.dwitterManage.methods
                      .search(userName).call();
-
+      await App.loadDweetsByUser1(userName);
+     
       $(".name").text(`${rc[0]} ${rc[1]}`)
       $(".sub-name").text(`@${userName}`)
       $("#bio").hide(); 
@@ -962,9 +965,20 @@ searchUser: async () => {
       $("#address11").text(pkey)
       const dweetcount = await App.dwitterManage.methods.dweetCountAuthor(pkey).call();
       $("#dweets").text(dweetcount)
+      
       $("#following").text(`${rc[5]}`)
       $("#followers").text(`${rc[4]}`)
-
+      
+      $(".dweetother")
+       .prop("disabled", false)
+       .prop("style", "visibility:visible")
+       .prop("id", userName )
+       .on("click", function(){ App.dweetsByUserOther(userName); $(".deleteButton").hide();});
+    $(".dweetmine")
+       .prop("disabled", true)
+       $(".dweetmine").hide();
+    
+   
       const temp = await App.dwitterManage.methods.getFollowingList(App.account).call()
       console.log("two"+id11)
       if(temp.includes(id11)){
@@ -982,10 +996,11 @@ searchUser: async () => {
        .prop("style", "display:none")
       }
      
+     
     }
 
   else{alert("Invalid username !")} 
- 
+  $('#search').val('');
 }},
 
 
@@ -1019,18 +1034,52 @@ unfollowUser1: async(id) => { //get the id
    $(`#followers`).text(curr)
  },
 
-dweetsByUser : async() => {
-  //console.log("wofks")
-  const $postTemplate = $(".dweetbody1");
-  const dweetCount = await App.dwitterManage.methods.dweet_count().call();
-  for(let i = dweetCount-1; i>=0; i--){
+dweetsByUser1 : async() => {
+  console.log("Hide dweets")
+  $(".profileDweet").hide();
+  $(".profile").show();
 
+},
+
+dweetsByUserMine : async() => {
+  console.log("Show dweets")
+  $(".profile").hide();
+  $(".profileDweet").show();
+  $(".content1").prop("style", "visibility : visible")
+  $(".content2").hide()
+
+},
+
+dweetsByUserOther : async() => {
+  console.log("Show dweets")
+  $(".profile").hide();
+  $(".content2").prop("style", "visibility : visible")
+  $(".content1").hide()
+  $(".profileDweet").show();
+  
+
+},
+ 
+ loadDweetsByUser : async(userName) => {  console.log("wofks Loading dweets")
+  const $postTemplate = $(".dweetpost1");
+  const dweetCount = await App.dwitterManage.methods.dweet_count().call();
+  const id11 = await App.dwitterManage.methods.userNameToId(userName).call();
+  const user = await App.dwitterManage.methods.users(id11).call();
+  const add1= user[1];
+  const add = add1.toLowerCase();
+  console.log(add+"addresssssssss")
+ // $("ol").empty();
+  $("ol#post1").empty();
+  for(let i = dweetCount-1; i>=0; i--){
       App.account = web3.currentProvider.selectedAddress;
       const dweet = await App.dwitterManage.methods.dweets(i).call();  
+     
       if(dweet[7] == false){
+       // console.log("hey"); console.log(dweet)
            const auth = dweet[2];
            var author = auth.toLowerCase();
-           if(author == App.account){
+           if(author == add){
+            console.log("only"); console.log(dweet)
                 let timestamp = dweet[3];
                 const d = new Date(0);
                 d.setUTCSeconds(timestamp);
@@ -1052,9 +1101,57 @@ dweetsByUser : async() => {
      
                $("#post1").append($newpostTemplate);
                $newpostTemplate.show(); 
+              
              }
-          }}
+             
+          }
+        } 
 },
+
+loadDweetsByUser1 : async(userName) => {  console.log("worrks Loading dweets")
+const $postTemplate1 = $(".dweetpost2");
+const dweetCount = await App.dwitterManage.methods.dweet_count().call();
+const id11 = await App.dwitterManage.methods.userNameToId(userName).call();
+const user = await App.dwitterManage.methods.users(id11).call();
+const add1= user[1];
+const add = add1.toLowerCase();
+console.log(add+"addresssssssss")
+$("ol#post2").empty();
+
+for(let i = dweetCount-1; i>=0; i--){
+    App.account = web3.currentProvider.selectedAddress;
+    const dweet = await App.dwitterManage.methods.dweets(i).call();  
+   
+    if(dweet[7] == false){
+     // console.log("hey"); console.log(dweet)
+         const auth = dweet[2];
+         var author = auth.toLowerCase();
+         if(author == add){
+          console.log("only"); console.log(dweet)
+              let timestamp = dweet[3];
+              const d = new Date(0);
+              d.setUTCSeconds(timestamp);
+              var datestring = `${d.getDate()}-${(d.getMonth()+1)}-${d.getFullYear()} 
+                   ${d.getHours()}:${d.getMinutes()} IST`;
+              const content = dweet[1];
+              const hashtag = dweet[6];
+
+             const $newpostTemplate1 = $postTemplate1.clone();
+             $newpostTemplate1.find(".dweetcontent2").html(content);
+             $newpostTemplate1.find(".hashtags2").html(hashtag);
+             $newpostTemplate1.find(".time2").html(datestring);
+             
+             $("#post2").append($newpostTemplate1);
+             $newpostTemplate1.show(); 
+             $(".content1").hide()
+             $(".content2").prop("style", "visibility : visible")
+             $(".content2").show()
+           }
+           
+        }
+      } 
+},
+
 
 profile : async() => { 
     console.log("Profile")
@@ -1064,15 +1161,27 @@ profile : async() => {
     const user = await App.dwitterManage.methods.users(id).call();
     $(".name").text(`${user[2]} ${user[3]}`)
     $(".sub-name").text(`@${userName}`)
-    $(".bio").text(`${user[5]}`)
+    $("#bio").text(`${user[5]}`)
     const dweetcount = await App.dwitterManage.methods.dweetCountAuthor(App.account).call();
     $("#address11").text(App.account)
 
     $("#dweets").text(dweetcount)
+   
     $("#following").text(`${user[6]}`)
     $("#followers").text(`${user[7]}`)
     $(".profileid").prop("style", "display:none")
     $(".profileid1").prop("style", "display:none")
+    
+    $(".dweetmine")
+        .prop("disabled", false)
+       .prop("style", "visibility:visible")
+       .prop("id", userName )
+       .on("click", function(){ App.dweetsByUserMine(userName); });
+    $(".dweetother")
+       .prop("disabled", true)
+       $(".dweetother").hide();
+   
+    await App.loadDweetsByUser(userName);
    
 },
 
@@ -1105,4 +1214,3 @@ $(() => {
     App.load();
   });
 });
-
