@@ -170,6 +170,13 @@ body{
     display: grid;
   grid-template-columns: 10% auto;
 }
+
+.content2{
+   
+    padding: 1.7rem 2.5rem 2.6rem 2.5rem;
+    display: grid;
+    grid-template-columns: 10% auto;
+}
 .content{
    
     padding: 1.7rem 2.5rem 2.6rem 2.5rem;
