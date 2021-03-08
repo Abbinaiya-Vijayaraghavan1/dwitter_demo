@@ -218,7 +218,7 @@ body{
   
   
   
-  .upvoteButton {
+  .feedButton {
    
     border-radius: 10px;
     background-color:  #4C2A85;
@@ -247,7 +247,7 @@ margin-right: 40px;
    
   }
   
-  .upvoteButton:hover {
+  .feedButton:hover {
       
     border: 2px solid #D9EDFF;
     background-color: white;
@@ -255,47 +255,6 @@ margin-right: 40px;
     transition: 1s;
     box-shadow: 0 12px 16px 0             rgba(0,0,0,0.24), 0 17px 50px 0       rgba(0,0,0,0.19);
   }
-  
-  
-  .downvoteButton {
-   
-    border-radius: 10px;
-    background-color:  #4C2A85;
-    color: rgba(247, 245, 250, 0.925);
-    /*border: none;*/
-    padding: 5px 20px;
-    font-size: 20px;
-    margin-top: 30px;
-    font-weight: 600;
-    /*oooo*/
-    display: inline-block;
-text-decoration: none;
-border: 2px solid #D9EDFF;
-color: white;
-font-size: 13px;
-text-align: center;
-line-height: 20px;
-border-radius: 100px;
-padding: 0 22px;
--webkit-transition: all 0.3s;
-transition: all 0.3s;
-background:  #113653b7;
-width: 100px;
-margin-right: 40px;
-   
-   
-  }
-  
-  .downvoteButton:hover {
-      
-    border: 2px solid #D9EDFF;
-    background-color: white;
-    color: #4C2A85;
-    transition: 1s;
-    box-shadow: 0 12px 16px 0             rgba(0,0,0,0.24), 0 17px 50px 0       rgba(0,0,0,0.19);
-  }
-  
-  
 
  
   .reportButton {

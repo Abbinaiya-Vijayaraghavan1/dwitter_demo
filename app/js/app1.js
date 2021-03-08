@@ -822,7 +822,9 @@ loadAccount: async () => {
          $newpostTemplate.find(".reports").html(reports);
          $("#post").append($newpostTemplate); 
     
-        
+        $newpostTemplate
+        .find(".userName")
+        .on("click", function(){App.loadUserProfile(userName)});    
 
          $newpostTemplate
          .find(".upvoteButton")
@@ -943,11 +945,7 @@ deleteDweet: async (id) => {
   window.location.reload()
 },
 
-
-searchUser: async () => { 
-  
-  const userName = $('#search').val();
-  console.log("Profile11" + userName)
+loadUserProfile : async(userName) => {
   const authorId= await App.dwitterManage.methods.addressToId(App.account).call();
   const myaccount= await App.dwitterManage.methods.idToUsername(authorId).call();
   if(myaccount == userName) {await App.profile();}
@@ -982,30 +980,43 @@ searchUser: async () => {
     $(".dweetmine")
        .prop("disabled", true)
        $(".dweetmine").hide();
-    
+       $("profileid")
+       .prop("style", "display:none").prop("disabled", true)
+       $("profileid1")
+       .prop("style", "display:none").prop("disabled", true)
    
       const temp = await App.dwitterManage.methods.getFollowingList(App.account).call()
       if(temp.includes(id11)){
+        console.log("kiiiiiiiiiii")
        $(".profileid1")
-       .prop("style", "visibility:visible")
+       .prop("style", "visibility:visible").prop("disabled", false)
        $(".profileid1").on("click", function(){ App.unfollowUser1(id11); });
        $("profileid")
        .prop("style", "display:none")
       }
       else{
        $(".profileid")
-       .prop("style", "visibility:visible")
+       .prop("style", "visibility:visible").prop("disabled", false)
        $(".profileid").on("click", function(){ App.followUser1(id11); }); 
        $("profileid1")
        .prop("style", "display:none")
       }
-     
+      $('.dweetpost2').removeAttr('id');
+      $(".dweetpost2").prop("id", `temp${id11}`);
      
     }
 
   else{alert("Invalid username !")} 
   $('#search').val('');
-}},
+}
+},
+
+
+searchUser: async () => { 
+  const userName = $('#search').val();
+  console.log("Profile11" + userName)
+  await App.loadUserProfile(userName)
+  },
 
 
 followUser1: async(id) => { //get the id
@@ -1013,9 +1024,9 @@ followUser1: async(id) => { //get the id
  .followUser(id)
  .send({ from: web3.currentProvider.selectedAddress });  
   //Replace follow button by unfollow button
-  $(".profileid").hide()
+  $(".profileid").hide().prop("disabled", true)
   $(".profileid1").prop("style", "visibility:visible")
-  $(".profileid1").on("click", function(){ App.unfollowUser1(id11); });
+  $(".profileid1").on("click", function(){ App.unfollowUser1(id); });
 
   //Increase count of followers and following in frontend
   var old = $(`.followers`).text()
@@ -1028,9 +1039,9 @@ unfollowUser1: async(id) => { //get the id
   .unfollowUser(id)
   .send({ from: web3.currentProvider.selectedAddress });  
    //Replace follow button by unfollow button
-   $(".profileid1").hide()
+   $(".profileid1").hide().prop("disabled", true)
    $(".profileid").prop("style", "visibility:visible")
-   $(".profileid").on("click", function(){ App.followUser1(id11); });
+   $(".profileid").on("click", function(){ App.followUser1(id); });
 
    //Increase count of followers and following in frontend
    var old = $(`.followers`).text()
@@ -1114,8 +1125,9 @@ dweetsByUserOther : async() => {
 
 loadDweetsByUser1 : async(userName) => {  console.log(`Loading dweets of ${userName}`)
 //$('ul#post2 li:not(:first-child)').remove();
-//const $postTemplate1 = $('ul#post2 li:first');
-const $postTemplate1 = $('.dweetpost2');
+const $postTemplate1 = $('ul#post2 li:first');
+//const $postTemplate1 = $(`.dweetpost2`);
+console.log("aa"+$postTemplate1)
 const dweetCount = await App.dwitterManage.methods.dweet_count().call();
 const id11 = await App.dwitterManage.methods.userNameToId(userName).call();
 const user = await App.dwitterManage.methods.users(id11).call();
